@@ -1,0 +1,23 @@
+{
+	"bitwise": true,
+	"camelcase": true,
+	"curly": true,
+  "esversion": 6,
+  "expr": true,
+  "eqeqeq": false,
+  "forin": false,
+  "freeze": true,
+  "futurehostile": true,
+	"immed": true,
+  "latedef": "nofunc",
+  "maxparams": 5,
+	"mocha": true,
+	"newcap": true,
+	"noarg": true,
+	"node": true,
+  "shadow": true,
+	"strict": true,
+	"undef": true,
+	"unused": "vars",
+  "-W093": false
+}
