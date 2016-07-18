@@ -2,13 +2,15 @@
 var expect = require('chai').expect;
 
 var Factory = require('../../lib/Factory');
-var unicast = require('../../lib/discovery/unicast');
+var Unicast = require('../../lib/discovery/unicast');
 
 
 describe('discovery.unicast', () => {
   beforeEach(Factory.reset);
 
   it('should emit the discovered event', done => {
+
+
     Factory.emitter.once('discovered', nodes => {
       expect(nodes.length).to.equal(2);
       expect(nodes[0]).to.deep.equal('tcp://1.0.0.0:1');
@@ -23,6 +25,6 @@ describe('discovery.unicast', () => {
       }
     };
 
-    unicast.discover();
+    new Unicast().discover();
   });
 });

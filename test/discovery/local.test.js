@@ -5,7 +5,7 @@ var path = require('path');
 var expect = require('chai').expect;
 
 var Factory = require('../../lib/Factory');
-var local = require('../../lib/discovery/local');
+var Local = require('../../lib/discovery/local');
 
 
 /**
@@ -18,7 +18,6 @@ describe('discovery.local', () => {
 
   afterEach(function() {
     fs.unlinkSync(tmpFile);
-    local.knowHost = [];
   });
 
   it('should emit the discovered event', done => {
@@ -41,7 +40,7 @@ describe('discovery.local', () => {
       Factory.emitter.emit('connected');
     });
 
-    local.discover();
+    new Local().discover();
 
     fs.appendFile(tmpFile, 'tcp://127.0.0.1:54321\n', 'utf8');
   });
