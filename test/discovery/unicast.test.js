@@ -11,7 +11,7 @@ describe('discovery.unicast', () => {
   it('should emit the discovered event', done => {
 
 
-    Factory.emitter.once('discovered', nodes => {
+    Factory.once('discovered', nodes => {
       expect(nodes.length).to.equal(2);
       expect(nodes[0]).to.deep.equal('tcp://1.0.0.0:1');
       expect(nodes[1]).to.deep.equal('tcp://1.0.0.0:2');

@@ -11,20 +11,12 @@ describe('examples', () => {
   it('should create a local req/rep connection', done => {
     let netz = new Netz();
 
-    let req = netz.req('myReqRep');
-    let rep1 = netz.rep('myReqRep');
-    let rep2 = netz.rep('myReqRep');
+    let req = netz.req('myReqRes');
+    let res = netz.res('myReqRes');
 
-    // Either one of these will answer
-    rep1.on('message', msg => {
+    res.on('message', msg => {
       expect(msg).to.equal('request');
-      rep1.send('response');
-    });
-
-    // Either one of these will answer
-    rep2.on('message', msg => {
-      expect(msg).to.equal('request');
-      rep2.send('response');
+      res.send('response');
     });
 
     req.on('message', msg => {
@@ -39,26 +31,12 @@ describe('examples', () => {
     let netz = new Netz();
 
     let pub = netz.pub('myPubSub');
-    let sub1 = netz.sub('myPubSub');
-    let sub2 = netz.sub('myPubSub');
-    let sub3 = netz.sub('myPubSub');
+    let sub = netz.sub('myPubSub');
 
     let messages = 0;
 
-    sub1.subscribe('mySubject');
-    sub1.on('message', msg => {
-      expect(msg).to.equal('broadcast');
-      ++messages == 3 && done();
-    });
-
-    sub2.subscribe('mySubject');
-    sub2.on('message', msg => {
-      expect(msg).to.equal('broadcast');
-      ++messages == 3 && done();
-    });
-
-    sub3.subscribe('mySubject');
-    sub3.on('message', msg => {
+    sub.subscribe('mySubject');
+    sub.on('message', msg => {
       expect(msg).to.equal('broadcast');
       ++messages == 3 && done();
     });

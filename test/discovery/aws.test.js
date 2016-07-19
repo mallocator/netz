@@ -10,10 +10,10 @@ if (process.env.INTEGRATION) {
     beforeEach(Factory.reset);
 
     it('should connect to AWS and list all instances', done => {
-      Factory.emitter.once('error', err => {
+      Factory.once('error', err => {
         throw err;
       });
-      Factory.emitter.once('discovered', msg => {
+      Factory.once('discovered', msg => {
         expect(msg).to.deep.equal(['tcp://ec2-hostname:12345']);
         done();
       });

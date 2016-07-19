@@ -29,15 +29,15 @@ describe('discovery.local', () => {
         interval: 10
       }
     };
-    Factory.emitter.once('error', err => {
+    Factory.once('error', err => {
       throw err;
     });
-    Factory.emitter.once('discovered', nodes => {
+    Factory.once('discovered', nodes => {
       expect(nodes.length).to.equal(1);
       expect(nodes[0]).to.deep.equal('tcp://127.0.0.1:54321');
       expect(fs.readFileSync(tmpFile, 'utf8')).to.equal('tcp://127.0.0.1:12345\ntcp://127.0.0.1:54321\n');
-      Factory.emitter.once('connected', done);
-      Factory.emitter.emit('connected');
+      Factory.once('connected', done);
+      Factory.emit('connected');
     });
 
     new Local().discover();
