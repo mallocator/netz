@@ -1,24 +1,15 @@
 /* global describe, it, beforeEach, afterEach */
 var expect = require('chai').expect;
 
-var aws = require('../../lib/discovery/aws');
-var Factory = require('../../lib/Factory');
+var AWS = require('../../lib/discovery/aws');
+var Options = require('../../lib/Options');
 
 
 if (process.env.INTEGRATION) {
   describe('discovery.aws', () => {
-    beforeEach(Factory.reset);
-
     it('should connect to AWS and list all instances', done => {
-      Factory.once('error', err => {
-        throw err;
-      });
-      Factory.once('discovered', msg => {
-        expect(msg).to.deep.equal(['tcp://ec2-hostname:12345']);
-        done();
-      });
       // Will connect using environment credentials
-      Factory.options = {
+      let context = new Options({
         debug: console.log,
         listen: 'tcp://127.0.0.1:2206',
         discovery: {
@@ -30,8 +21,16 @@ if (process.env.INTEGRATION) {
             Values: ['securityGroup']
           }]
         }
-      };
-      aws.discover();
+      });
+      context.once('error', err => {
+        throw err;
+      });
+      context.once('discovered', msg => {
+        expect(msg).to.deep.equal(['tcp://ec2-hostname:12345']);
+        done();
+      });
+
+      new AWS(context).discover();
     });
   });
 }

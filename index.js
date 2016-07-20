@@ -1,9 +1,16 @@
-var Factory = require('./lib/Factory');
+var DiscoveryManager = require('./lib/discovery');
+var Options = require('./lib/Options');
+
 
 class Netz {
   constructor(options) {
-    Factory.options = options;
-    Factory.discovery.start();
+    if (options instanceof Options) {
+      this._context = options;
+    } else {
+      this._context = new Options(options);
+    }
+    this._discovery = new DiscoveryManager(this._context);
+    this._discovery.start();
   }
 
   /**
@@ -13,7 +20,7 @@ class Netz {
    * @returns {Req}
    */
   req(type) {
-    return Factory.services.create('req', type);
+    return this._context._services.create('req', type);
   }
 
   /**
@@ -23,7 +30,14 @@ class Netz {
    * @returns {Rep}
    */
   res(type) {
-    return Factory.services.create('rep', type);
+    return this._context._services.create('rep', type);
+  }
+
+  /**
+   * Stops all operations and will disconnect from the cluster. Local services may still work though.
+   */
+  shutdown() {
+    this._discovery.stop();
   }
 }
 

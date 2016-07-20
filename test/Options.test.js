@@ -40,4 +40,12 @@ describe('Options', () => {
     expect(options.ports.min).to.equal(40000);
     expect(options.ports.max).to.equal(50000);
   });
+
+  it('should be an event emitter', done => {
+    var options = new Options();
+    options.once('test', () => {
+      done();
+    });
+    options.emit('test');
+  });
 });

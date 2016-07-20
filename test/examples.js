@@ -2,12 +2,9 @@
 let expect = require('chai').expect;
 
 let Netz = require('..');
-let Factory = require('../lib/Factory');
 
 
 describe('examples', () => {
-  beforeEach(Factory.reset);
-
   it('should create a local req/rep connection', done => {
     let netz = new Netz();
 
