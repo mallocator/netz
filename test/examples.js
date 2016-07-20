@@ -64,7 +64,7 @@ describe('examples', () => {
   it('should create a local survey', done => {
     let netz = new Netz();
 
-    let survey = netz.survey('mySurvey');
+    let surveyor = netz.surveyor('mySurvey');
     let respondent = netz.respondent('mySurvey');
 
     respondent.on('message', msg => {
@@ -72,12 +72,12 @@ describe('examples', () => {
       respondent.send('answer1');
     });
 
-    survey.on('message', msg => {
+    surveyor.on('message', msg => {
       expect(msg).to.deep.equal('answer1');
       done();
     });
 
-    survey.send('question');
+    surveyor.send('question');
   });
 
   it('should create a local pair connection', done => {
@@ -102,10 +102,10 @@ describe('examples', () => {
   it('should create a local bus', done => {
     let netz = new Netz();
 
-    let node1 = netz.pub('myBus');
-    let node2 = netz.sub('myBus');
-    let node3 = netz.sub('myBus');
-    let node4 = netz.sub('myBus');
+    let node1 = netz.bus('myBus');
+    let node2 = netz.bus('myBus');
+    let node3 = netz.bus('myBus');
+    let node4 = netz.bus('myBus');
 
     let messages = 0;
 

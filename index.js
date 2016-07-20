@@ -72,9 +72,9 @@ class Netz {
   /**
    *
    * @param {String} type
-   * @returns {Survey}
+   * @returns {Surveyor}
    */
-  survey(type) {
+  surveyor(type) {
     return this._context._services.create('surveyor', type);
   }
 
@@ -87,8 +87,22 @@ class Netz {
     return this._context._services.create('respondent', type);
   }
 
+  /**
+   *
+   * @param {String} type
+   * @returns {Pair}
+   */
   pair(type) {
     return this._context._services.create('pair', type);
+  }
+
+  /**
+   *
+   * @param {String} type
+   * @returns {Bus}
+   */
+  bus(type) {
+    return this._context._services.create('bus', type);
   }
 
   /**
