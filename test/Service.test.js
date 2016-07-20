@@ -8,8 +8,9 @@ var Req = require('../lib/sockets/Req');
 
 describe('Service', () => {
   it('should create a new Socket and set all the right properties', () => {
-    var node = new Node('localhost');
-    var req = new Req(new EventEmitter(), node, 'testReq');
+    var context = new EventEmitter();
+    var node = new Node(context, 'localhost');
+    var req = new Req(context, node, 'testReq');
     expect(req.type).to.equal('Req');
   });
 });

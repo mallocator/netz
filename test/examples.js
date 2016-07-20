@@ -30,12 +30,10 @@ describe('examples', () => {
     let pub = netz.pub('myPubSub');
     let sub = netz.sub('myPubSub');
 
-    let messages = 0;
-
     sub.subscribe('mySubject');
     sub.on('message', msg => {
-      expect(msg).to.equal('broadcast');
-      ++messages == 3 && done();
+      expect(msg).to.equal('mySubject request');
+      done();
     });
 
     pub.send('mySubject request');
@@ -52,15 +50,34 @@ describe('examples', () => {
 
     pull1.on('message', msg => {
       expect(msg).to.equal('payload');
-      push2.send(msg);
+      push2.send(msg + '2');
     });
 
     pull2.on('message', msg => {
-      expect(msg).to.equal('payload');
+      expect(msg).to.equal('payload2');
       done();
     });
 
     push1.send('payload');
+  });
+
+  it('should create a local survey', done => {
+    let netz = new Netz();
+
+    let survey = netz.survey('mySurvey');
+    let respondent = netz.respondent('mySurvey');
+
+    respondent.on('message', msg => {
+      expect(msg).to.equal('question');
+      respondent.send('answer1');
+    });
+
+    survey.on('message', msg => {
+      expect(msg).to.deep.equal('answer1');
+      done();
+    });
+
+    survey.send('question');
   });
 
   it('should create a local pair connection', done => {
@@ -108,36 +125,5 @@ describe('examples', () => {
     });
 
     node4.send('request');
-  });
-
-  it('should create a local survey', done => {
-    let netz = new Netz();
-
-    let survey = netz.survey('mySurvey');
-    let respondent1 = netz.respondent('mySurvey');
-    let respondent2 = netz.respondent('mySurvey');
-    let respondent3 = netz.respondent('mySurvey');
-
-    respondent1.on('message', msg => {
-      expect(msg).to.equal('question');
-      respondent1.send('answer1');
-    });
-
-    respondent2.on('message', msg => {
-      expect(msg).to.equal('question');
-      respondent2.send('answer2');
-    });
-
-    respondent3.on('message', msg => {
-      expect(msg).to.equal('question');
-      respondent1.send('answer3');
-    });
-
-    survey.on('complete', msg => {
-      expect(msg).to.deep.equal(['answer1', 'answer2', 'answer3']);
-      done();
-    });
-
-    survey.send('question');
   });
 });
