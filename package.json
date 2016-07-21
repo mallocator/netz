@@ -1,7 +1,8 @@
 {
   "name": "netz",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A peer-2-peer service discovery and communication framework built on top of nanomsg",
+  "keywords": [ "nanomsg", "zeromq", "zmq", "0mq", "discovery", "services", "peer2peer", "p2p" ],
   "main": "index.js",
   "homepage": "http://github.com/mallocator/netz",
   "license": "Apache-2.0",
