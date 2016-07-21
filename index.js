@@ -50,8 +50,7 @@ class Netz {
   }
 
   /**
-   * Returns a service socket of type 'req'. If the socket for the service already exists on this node, that instance is
-   * returned otherwise a brand new one is created.
+   *
    * @param {String} type
    * @returns {Req}
    */
@@ -60,8 +59,7 @@ class Netz {
   }
 
   /**
-   * Returns a service socket of type 'res'. If the socket for the service already exists on this node, that instance is
-   * returned otherwise a brand new one is created.
+   *
    * @param {String} type
    * @returns {Push}
    */
@@ -106,9 +104,36 @@ class Netz {
   }
 
   /**
+   * A helper method that will create service based on your communication requirements. This method should help for
+   * anyone who isn't too sure about which service connect to which.
+   * @param {String} type       The type of the service you want to create (aka it's name, e.g. "myService")
+   * @param {Boolean} one2many  Set to true if you want a service that talks with all connected nodes instead of just
+   *                            one out of the cluster
+   * @param {Boolean} responds  Set to true if you want the receiver to be able to send responses to the transmitter
+   * @param {Boolean} receiver  Set to true if you want to receive message with this service otherwise you will get the
+   *                            sender service.
+   */
+  service(type, one2many, responds, receiver) {
+    if (one2many) {
+      if (responds) {
+        return receiver ? this.respondent(type) : this.surveyor(type);
+      } else {
+        return receiver ? this.sub(type) : this.pub(type);
+      }
+    } else {
+      if (responds) {
+        return receiver ? this.rep(type) : this.req(type);
+      } else {
+        return receiver ? this.pull(type) : this.push(type);
+      }
+    }
+  }
+
+  /**
    * Stops all operations and will disconnect from the cluster. Local services may still work though.
    */
   shutdown() {
+    // TODO clean up existing services and unregister them from the cluster before closing down.
     this._discovery.stop();
   }
 }

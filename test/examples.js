@@ -9,11 +9,19 @@ describe('examples', () => {
     let netz = new Netz();
 
     let req = netz.req('myReqRes');
-    let res = netz.rep('myReqRes');
+    let rep1 = netz.rep('myReqRes');
+    let rep2 = netz.rep('myReqRes');
 
-    res.on('message', msg => {
+    // One of these will answer
+    rep1.on('message', msg => {
       expect(msg).to.equal('request');
-      res.send('response');
+      rep1.send('response');
+    });
+
+    // One of these will answer
+    rep2.on('message', msg => {
+      expect(msg).to.equal('request');
+      rep2.send('response');
     });
 
     req.on('message', msg => {
@@ -28,13 +36,34 @@ describe('examples', () => {
     let netz = new Netz();
 
     let pub = netz.pub('myPubSub');
-    let sub = netz.sub('myPubSub');
+    let sub1 = netz.sub('myPubSub');
+    let sub2 = netz.sub('myPubSub');
+    let sub3 = netz.sub('myPubSub');
 
-    sub.subscribe('mySubject');
-    sub.on('message', (msg, topic) => {
+    let messages = 0;
+
+    // All of these will receive a message
+    sub1.subscribe('mySubject');
+    sub1.on('message', (msg, topic) => {
       expect(topic).to.equal('mySubject');
       expect(msg).to.equal('request');
-      done();
+      ++messages == 3 && done();
+    });
+
+    // All of these will receive a message
+    sub2.subscribe('mySubject');
+    sub2.on('message', (msg, topic) => {
+      expect(topic).to.equal('mySubject');
+      expect(msg).to.equal('request');
+      ++messages == 3 && done();
+    });
+
+    // All of these will receive a message
+    sub3.subscribe('mySubject');
+    sub3.on('message', (msg, topic) => {
+      expect(topic).to.equal('mySubject');
+      expect(msg).to.equal('request');
+      ++messages == 3 && done();
     });
 
     pub.send('request', 'mySubject');
@@ -66,16 +95,30 @@ describe('examples', () => {
     let netz = new Netz();
 
     let surveyor = netz.surveyor('mySurvey');
-    let respondent = netz.respondent('mySurvey');
+    let respondent1 = netz.respondent('mySurvey');
+    let respondent2 = netz.respondent('mySurvey');
+    let respondent3 = netz.respondent('mySurvey');
 
-    respondent.on('message', msg => {
+    respondent1.on('message', msg => {
       expect(msg).to.equal('question');
-      respondent.send('answer1');
+      respondent1.send('answer1');
     });
+
+    respondent2.on('message', msg => {
+      expect(msg).to.equal('question');
+      respondent2.send('answer1');
+    });
+
+    respondent3.on('message', msg => {
+      expect(msg).to.equal('question');
+      respondent3.send('answer1');
+    });
+
+    var messages= 0;
 
     surveyor.on('message', msg => {
       expect(msg).to.deep.equal('answer1');
-      done();
+      ++messages == 3 && done();
     });
 
     surveyor.send('question');

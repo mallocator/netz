@@ -18,8 +18,6 @@ install: npm update
 
 cache:
   apt: true
-  directories:
-    - node_modules
 
 script: "npm run test-travis"
 after_script: "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js || true"
