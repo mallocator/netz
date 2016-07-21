@@ -9,7 +9,7 @@ describe('examples', () => {
     let netz = new Netz();
 
     let req = netz.req('myReqRes');
-    let res = netz.res('myReqRes');
+    let res = netz.rep('myReqRes');
 
     res.on('message', msg => {
       expect(msg).to.equal('request');
@@ -31,12 +31,13 @@ describe('examples', () => {
     let sub = netz.sub('myPubSub');
 
     sub.subscribe('mySubject');
-    sub.on('message', msg => {
-      expect(msg).to.equal('mySubject request');
+    sub.on('message', (msg, topic) => {
+      expect(topic).to.equal('mySubject');
+      expect(msg).to.equal('request');
       done();
     });
 
-    pub.send('mySubject request');
+    pub.send('request', 'mySubject');
   });
 
   it('should create a local pipeline', done => {
@@ -124,6 +125,6 @@ describe('examples', () => {
       ++messages == 3 && done();
     });
 
-    node4.send('request');
+    node4.send('broadcast');
   });
 });

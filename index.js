@@ -19,7 +19,7 @@ class Netz {
    * @returns {Pub}
    */
   pub(type) {
-    return this._context._services.create('pub', type);
+    return this._context._services.create('Pub', type);
   }
 
   /**
@@ -28,7 +28,7 @@ class Netz {
    * @returns {Sub}
    */
   sub(type) {
-    return this._context._services.create('sub', type);
+    return this._context._services.create('Sub', type);
   }
 
   /**
@@ -37,7 +37,7 @@ class Netz {
    * @returns {Push}
    */
   push(type) {
-    return this._context._services.create('push', type);
+    return this._context._services.create('Push', type);
   }
 
   /**
@@ -46,7 +46,7 @@ class Netz {
    * @returns {Pull}
    */
   pull(type) {
-    return this._context._services.create('pull', type);
+    return this._context._services.create('Pull', type);
   }
 
   /**
@@ -56,7 +56,7 @@ class Netz {
    * @returns {Req}
    */
   req(type) {
-    return this._context._services.create('req', type);
+    return this._context._services.create('Req', type);
   }
 
   /**
@@ -65,8 +65,8 @@ class Netz {
    * @param {String} type
    * @returns {Push}
    */
-  res(type) {
-    return this._context._services.create('rep', type);
+  rep(type) {
+    return this._context._services.create('Rep', type);
   }
 
   /**
@@ -75,7 +75,7 @@ class Netz {
    * @returns {Surveyor}
    */
   surveyor(type) {
-    return this._context._services.create('surveyor', type);
+    return this._context._services.create('Surveyor', type);
   }
 
   /**
@@ -84,7 +84,7 @@ class Netz {
    * @returns {Respondent}
    */
   respondent(type) {
-    return this._context._services.create('respondent', type);
+    return this._context._services.create('Respondent', type);
   }
 
   /**
@@ -93,7 +93,7 @@ class Netz {
    * @returns {Pair}
    */
   pair(type) {
-    return this._context._services.create('pair', type);
+    return this._context._services.create('Pair', type);
   }
 
   /**
@@ -102,7 +102,7 @@ class Netz {
    * @returns {Bus}
    */
   bus(type) {
-    return this._context._services.create('bus', type);
+    return this._context._services.create('Bus', type);
   }
 
   /**
