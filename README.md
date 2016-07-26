@@ -28,3 +28,8 @@ nanomsg is a socket library that provides several common communication patterns.
 # API
 
 A detailed documentation will come, until then check out the [examples](test/examples.js) in the test directory.
+
+
+# Future Development
+
+* A monitor tool that shows what services/nodes are available on the cluster and general cluster information

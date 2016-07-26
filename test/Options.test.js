@@ -10,6 +10,7 @@ describe('Options', () => {
         min: 30000,
         max: '31000'
       },
+      debug: () => {},
       someComplexOption: {
         thatIsNotValidated: true
       }
@@ -24,6 +25,7 @@ describe('Options', () => {
     expect(options.ports.other).to.equal(29000);
     // Allow complex objects to be passed in even without validation
     expect(options.someComplexOption.thatIsNotValidated).to.equal(true);
+    options._cluster.stop();
   });
 
   it('should validate that port ranges are valid', () => {
@@ -31,19 +33,22 @@ describe('Options', () => {
       ports: {
         min: 10,
         max: 9
-      }
+      },
+      debug: () => {}
     })).to.throw(Error);
   });
 
   it('should validate that defaults are being set properly', () => {
-    var options = new Options({});
+    var options = new Options({debug: () => {}});
     expect(options.ports.min).to.equal(40000);
     expect(options.ports.max).to.equal(50000);
+    options._cluster.stop();
   });
 
   it('should be an event emitter', done => {
-    var options = new Options();
+    var options = new Options({debug: () => {}});
     options.once('test', () => {
+      options._cluster.stop();
       done();
     });
     options.emit('test');

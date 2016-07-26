@@ -11,7 +11,8 @@ describe('discovery.unicast', () => {
       discovery: {
         type: 'unicast',
         hosts: ['tcp://1.0.0.0:1', 'tcp://1.0.0.0:2']
-      }
+      },
+      debug: () => {}
     });
 
     context.once('discovered', nodes => {

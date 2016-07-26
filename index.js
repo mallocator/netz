@@ -135,6 +135,7 @@ class Netz {
   shutdown() {
     // TODO clean up existing services and unregister them from the cluster before closing down.
     this._discovery.stop();
+    this._context._cluster.stop();
   }
 }
 

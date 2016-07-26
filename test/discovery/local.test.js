@@ -21,6 +21,7 @@ describe('discovery.local', () => {
   it('should emit the discovered event', done => {
     let context = new Options({
       listen: 'tcp://127.0.0.1:12345',
+      debug: () => {},
       discovery: {
         type: 'local',
         file: tmpFile,
